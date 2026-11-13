@@ -1,410 +1,1002 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Destiny — La montre qui te montre la suite</title>
-<meta name="description" content="Destiny. Une montre qui projette les conséquences de tes décisions avant que tu les prennes." />
-<link rel="preconnect" href="[fonts.googleapis.com](https://fonts.googleapis.com)" />
-<link rel="preconnect" href="[fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin />
-<link href="[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap)" rel="stylesheet" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#111110">
+<title>DESTINY — Take Control of Your Destiny</title>
+<meta name="description" content="DESTINY. Une montre qui ne mesure pas seulement le temps. Elle révèle la portée de vos décisions.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
 <style>
-  :root{
-    --bg:#191917;
-    --bg-soft:#20201e;
-    --ink:#EEEEEE;
-    --muted:#8A8A85;
-    --line:rgba(238,238,238,.12);
-    --font:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+:root {
+  --bg:#111110;
+  --surface:#191918;
+  --surface2:#20201e;
+  --white:#f1f0eb;
+  --muted:#898983;
+  --line:rgba(255,255,255,.12);
+  --accent:#b7c2c8;
+  --gold:#b8a789;
+  --font:'Inter',sans-serif;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--white);
+  font-family:var(--font);
+  overflow-x:hidden;
+}
+body,button,input{font-family:var(--font)}
+a{color:inherit;text-decoration:none}
+button{color:inherit}
+::selection{background:var(--white);color:var(--bg)}
+
+#loader{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:#111110;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:opacity .8s ease,visibility .8s ease;
+}
+#loader.done{opacity:0;visibility:hidden;pointer-events:none}
+.loader-content{text-align:center}
+.loader-logo{
+  font-size:clamp(3rem,9vw,6rem);
+  font-weight:900;
+  letter-spacing:-.08em;
+  animation:logoIntro 1s ease both;
+}
+.loader-line{
+  height:1px;
+  width:180px;
+  background:rgba(255,255,255,.15);
+  margin:24px auto 15px;
+  overflow:hidden;
+}
+.loader-line span{
+  display:block;
+  height:100%;
+  width:0;
+  background:#fff;
+  animation:loading 1.7s ease forwards;
+}
+.loader-caption{
+  font-size:9px;
+  color:var(--muted);
+  letter-spacing:.3em;
+  text-transform:uppercase;
+}
+@keyframes loading{to{width:100%}}
+@keyframes logoIntro{
+  from{opacity:0;transform:translateY(20px);letter-spacing:.1em}
+  to{opacity:1;transform:translateY(0);letter-spacing:-.08em}
+}
+
+/* NAVIGATION */
+nav{
+  position:fixed;
+  top:0;left:0;right:0;
+  height:84px;
+  z-index:100;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 5vw;
+  background:linear-gradient(to bottom,rgba(17,17,16,.88),transparent);
+  backdrop-filter:blur(8px);
+}
+.logo{
+  font-size:21px;
+  font-weight:900;
+  letter-spacing:-1.5px;
+}
+.logo span{color:#8e9ba1}
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:35px;
+}
+.nav-links a{
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:#aaa;
+  transition:color .3s;
+}
+.nav-links a:hover{color:#fff}
+.nav-cta{
+  border:1px solid rgba(255,255,255,.4);
+  padding:12px 19px;
+  border-radius:30px;
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:.15em;
+  transition:.3s;
+}
+.nav-cta:hover{background:#fff;color:#111}
+.menu-toggle{
+  display:none;
+  background:none;
+  border:0;
+  font-size:24px;
+  cursor:pointer;
+}
+
+/* HERO */
+.hero{
+  min-height:100svh;
+  position:relative;
+  display:flex;
+  align-items:center;
+  padding:130px 8vw 80px;
+  overflow:hidden;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  width:700px;height:700px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(130,145,150,.13),transparent 68%);
+  right:-100px;top:5%;
+  pointer-events:none;
+}
+.hero-content{
+  position:relative;
+  z-index:3;
+  max-width:720px;
+}
+.eyebrow{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  color:#a3a39d;
+  font-size:9px;
+  letter-spacing:.32em;
+  text-transform:uppercase;
+  margin-bottom:30px;
+}
+.eyebrow::before{
+  content:"";
+  width:35px;height:1px;
+  background:#9da9ad;
+}
+.hero h1{
+  font-size:clamp(4rem,10vw,10rem);
+  line-height:.82;
+  letter-spacing:-.095em;
+  font-weight:800;
+}
+.hero h1 .outline{
+  color:transparent;
+  -webkit-text-stroke:1px rgba(255,255,255,.8);
+}
+.hero-description{
+  max-width:410px;
+  color:#999994;
+  font-size:13px;
+  line-height:1.9;
+  font-weight:300;
+  margin-top:38px;
+}
+.hero-description strong{color:#fff;font-weight:500}
+.hero-actions{
+  display:flex;
+  gap:13px;
+  margin-top:35px;
+  flex-wrap:wrap;
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  padding:16px 25px;
+  border-radius:40px;
+  font-size:9px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.15em;
+  transition:all .35s;
+  cursor:pointer;
+}
+.btn-primary{background:#eee;color:#111}
+.btn-primary:hover{background:#b9c5ca;transform:translateY(-3px)}
+.btn-outline{border:1px solid rgba(255,255,255,.25)}
+.btn-outline:hover{border-color:#fff;transform:translateY(-3px)}
+.hero-model{
+  position:absolute;
+  width:min(53vw,700px);
+  height:min(53vw,700px);
+  right:1%;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:2;
+}
+#hero-watch{width:100%;height:100%}
+.hero-index{
+  position:absolute;
+  right:5vw;
+  bottom:55px;
+  color:#62625e;
+  font-size:9px;
+  letter-spacing:.2em;
+}
+
+/* BANDE */
+.marquee{
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  overflow:hidden;
+  padding:23px 0;
+  background:#151514;
+}
+.marquee-track{
+  display:flex;
+  width:max-content;
+  animation:marquee 32s linear infinite;
+}
+.marquee span{
+  font-size:11px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:#999;
+  padding:0 35px;
+}
+.marquee b{color:#eee;font-weight:600}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+/* STRUCTURE */
+section{padding:120px 8vw}
+.section-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:30px;
+  padding-bottom:30px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:65px;
+}
+.section-number{
+  color:#888;
+  font-size:9px;
+  letter-spacing:.25em;
+  text-transform:uppercase;
+  margin-bottom:20px;
+}
+.section-title{
+  font-size:clamp(2.7rem,6vw,6rem);
+  letter-spacing:-.075em;
+  line-height:.91;
+  font-weight:700;
+}
+.section-note{
+  color:#858580;
+  font-size:12px;
+  line-height:1.8;
+  max-width:280px;
+  font-weight:300;
+}
+
+/* REVEAL */
+.reveal{
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity .9s ease,transform .9s ease;
+}
+.reveal.visible{opacity:1;transform:translateY(0)}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none}
+}
+
+/* PHILOSOPHIE */
+.principle-list{display:flex;flex-direction:column}
+.principle-row{
+  display:grid;
+  grid-template-columns:1fr 50px 1fr;
+  align-items:center;
+  gap:20px;
+  padding:27px 0;
+  border-bottom:1px solid var(--line);
+}
+.principle-before{
+  font-size:clamp(17px,2.4vw,29px);
+  color:#666;
+  text-decoration:line-through;
+  text-decoration-thickness:1px;
+}
+.principle-arrow{text-align:center;color:#777}
+.principle-after{
+  font-size:clamp(17px,2.4vw,29px);
+  font-weight:600;
+  letter-spacing:-.04em;
+}
+
+/* FEATURES */
+.features{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1px;
+  background:var(--line);
+  border:1px solid var(--line);
+}
+.feature{
+  background:var(--bg);
+  padding:35px 28px;
+  min-height:300px;
+  display:flex;
+  flex-direction:column;
+  transition:background .3s;
+}
+.feature:hover{background:#1b1b19}
+.feature-number{
+  font-size:9px;
+  letter-spacing:.2em;
+  color:#777;
+}
+.feature-symbol{
+  font-size:26px;
+  color:#b4c0c5;
+  margin:40px 0;
+}
+.feature h3{
+  font-size:18px;
+  letter-spacing:-.04em;
+  margin-bottom:13px;
+}
+.feature p{
+  color:#858580;
+  font-size:11px;
+  line-height:1.9;
+  font-weight:300;
+}
+
+/* WATCH SECTION */
+.watch-section{
+  background:#181817;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.watch-layout{
+  display:grid;
+  grid-template-columns:.8fr 1.2fr;
+  gap:65px;
+  align-items:center;
+}
+.watch-copy h3{
+  font-size:35px;
+  letter-spacing:-.07em;
+  margin-bottom:22px;
+}
+.watch-copy>p{
+  color:#999;
+  font-size:12px;
+  line-height:1.9;
+  font-weight:300;
+  max-width:390px;
+}
+.watch-instruction{
+  margin-top:30px;
+  font-size:9px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:#aab6bb;
+}
+.specifications{
+  margin-top:35px;
+  border-top:1px solid var(--line);
+}
+.spec-row{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  padding:15px 0;
+  border-bottom:1px solid var(--line);
+  font-size:10px;
+}
+.spec-row span:first-child{
+  color:#777;
+  text-transform:uppercase;
+  letter-spacing:.13em;
+  font-size:8px;
+}
+.spec-row span:last-child{text-align:right}
+.viewer{
+  width:100%;
+  aspect-ratio:1.12;
+  position:relative;
+  overflow:hidden;
+  background:radial-gradient(ellipse at center,#30302e 0%,#1b1b19 48%,#141413 100%);
+  border:1px solid rgba(255,255,255,.1);
+  touch-action:none;
+  cursor:grab;
+}
+.viewer:active{cursor:grabbing}
+#watch-canvas{width:100%;height:100%;display:block}
+.viewer-controls{
+  position:absolute;
+  top:20px;right:20px;
+  display:flex;gap:8px;
+  z-index:4;
+}
+.viewer-controls button{
+  width:38px;height:38px;
+  border:1px solid rgba(255,255,255,.25);
+  background:rgba(0,0,0,.25);
+  border-radius:50%;
+  cursor:pointer;
+  font-size:15px;
+  transition:.3s;
+}
+.viewer-controls button:hover{background:#fff;color:#111}
+.viewer-label{
+  position:absolute;
+  bottom:20px;left:20px;
+  font-size:8px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:#aaa;
+  pointer-events:none;
+}
+
+/* COLLECTION */
+.collection{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+.product{
+  border:1px solid var(--line);
+  padding:25px;
+  transition:transform .4s,border-color .4s;
+}
+.product:hover{transform:translateY(-7px);border-color:#777}
+.product-visual{
+  height:260px;
+  display:grid;
+  place-items:center;
+  background:radial-gradient(circle,#292927,#151514 70%);
+  margin-bottom:25px;
+  overflow:hidden;
+}
+.product-watch{
+  width:145px;height:145px;
+  border-radius:50%;
+  border:8px solid #858b8e;
+  background:radial-gradient(circle at 35% 30%,#34383b,#080909 70%);
+  box-shadow:0 25px 40px rgba(0,0,0,.6),inset 0 0 0 3px #333;
+  position:relative;
+}
+.product-watch::before{
+  content:"";
+  position:absolute;
+  width:5px;height:65px;
+  background:#e1e3e2;
+  left:50%;top:13px;
+  transform-origin:bottom;
+  transform:translateX(-50%) rotate(35deg);
+}
+.product-watch::after{
+  content:"";
+  position:absolute;
+  width:3px;height:49px;
+  background:#b85d48;
+  left:50%;top:30px;
+  transform-origin:bottom;
+  transform:translateX(-50%) rotate(-35deg);
+}
+.product-watch.gold{border-color:#a99068}
+.product-watch.black{border-color:#484b4d}
+.product-name{font-size:17px;font-weight:600;letter-spacing:-.04em}
+.product-desc{
+  color:#888;
+  font-size:10px;
+  line-height:1.8;
+  margin-top:10px;
+  min-height:55px;
+}
+.product-bottom{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-top:1px solid var(--line);
+  padding-top:18px;
+  margin-top:20px;
+  font-size:10px;
+}
+.product-bottom span{color:#888;text-transform:uppercase;letter-spacing:.12em}
+.product-bottom strong{font-size:14px}
+
+/* MANIFESTE */
+.manifesto{
+  background:#1a1a18;
+  text-align:center;
+  padding-top:150px;
+  padding-bottom:150px;
+}
+.manifesto-label{
+  color:#999;
+  font-size:9px;
+  letter-spacing:.3em;
+  text-transform:uppercase;
+  margin-bottom:35px;
+}
+.manifesto h2{
+  font-size:clamp(3rem,8vw,8rem);
+  letter-spacing:-.09em;
+  line-height:.9;
+  font-weight:700;
+}
+.manifesto h2 span{
+  color:transparent;
+  -webkit-text-stroke:1px #eee;
+}
+.manifesto p{
+  max-width:470px;
+  margin:35px auto 0;
+  color:#92928c;
+  font-size:12px;
+  line-height:2;
+  font-weight:300;
+}
+
+/* CTA */
+.final-section{text-align:center}
+.final-section h2{
+  font-size:clamp(3rem,7vw,6rem);
+  letter-spacing:-.08em;
+  line-height:.95;
+  max-width:850px;
+  margin:0 auto 25px;
+}
+.final-section>p{
+  color:#888;
+  font-size:12px;
+  line-height:1.8;
+  margin:0 auto 35px;
+}
+.waitlist{
+  display:flex;
+  max-width:490px;
+  margin:auto;
+  padding:5px;
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:40px;
+}
+.waitlist input{
+  flex:1;
+  min-width:0;
+  background:none;
+  border:0;
+  outline:0;
+  color:#fff;
+  padding:12px 18px;
+  font-size:11px;
+}
+.waitlist input::placeholder{color:#777}
+.waitlist button{
+  border:0;
+  background:#eee;
+  color:#111;
+  border-radius:30px;
+  padding:13px 22px;
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  font-weight:700;
+  cursor:pointer;
+}
+.form-message{
+  color:#b8c5c8;
+  font-size:11px;
+  margin-top:18px;
+  min-height:15px;
+}
+
+/* FOOTER */
+footer{
+  border-top:1px solid var(--line);
+  padding:45px 8vw 30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:30px;
+}
+.footer-logo{
+  font-size:clamp(3rem,9vw,7rem);
+  font-weight:900;
+  letter-spacing:-.1em;
+  color:rgba(255,255,255,.12);
+}
+.footer-links{
+  display:flex;
+  gap:22px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
+.footer-links a{
+  font-size:9px;
+  color:#888;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+}
+.footer-links a:hover{color:#fff}
+.footer-note{font-size:9px;color:#666;line-height:1.8}
+
+/* RESPONSIVE */
+@media(max-width:1000px){
+  .hero-model{right:-10%;opacity:.7}
+  .features{grid-template-columns:repeat(2,1fr)}
+  .watch-layout{grid-template-columns:1fr;gap:40px}
+  .watch-copy{max-width:600px}
+}
+@media(max-width:700px){
+  nav{height:70px;padding:0 6vw}
+  .menu-toggle{display:block}
+  .nav-links{
+    display:none;
+    position:absolute;
+    top:70px;left:0;right:0;
+    padding:25px 6vw;
+    background:#151514;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:25px;
+    border-bottom:1px solid var(--line);
   }
-
-  *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;}
-  body{background:var(--bg);color:var(--ink);font-family:var(--font);overflow-x:hidden;}
-  a{color:inherit;text-decoration:none;}
-  ::selection{background:var(--ink);color:var(--bg);}
-
-  /* ---------- LOADER ---------- */
-  #loader{
-    position:fixed;inset:0;z-index:999;background:var(--bg);
-    display:flex;align-items:center;justify-content:center;
-    transition:opacity .8s cubic-bezier(.76,0,.24,1),visibility .8s;
+  .nav-links.open{display:flex}
+  .nav-cta{display:none}
+  .hero{
+    padding:120px 7vw 55px;
+    min-height:900px;
+    align-items:flex-start;
   }
-  #loader.done{opacity:0;visibility:hidden;}
-  .loader-word{font-size:clamp(2.5rem,9vw,7rem);font-weight:900;letter-spacing:-.05em;line-height:.9;overflow:hidden;}
-  .loader-word span{display:inline-block;transform:translateY(110%);animation:rise .9s cubic-bezier(.16,1,.3,1) forwards;}
-  .loader-word span:nth-child(2){animation-delay:.05s;}
-  .loader-word span:nth-child(3){animation-delay:.1s;}
-  .loader-word span:nth-child(4){animation-delay:.15s;}
-  .loader-word span:nth-child(5){animation-delay:.2s;}
-  .loader-word span:nth-child(6){animation-delay:.25s;}
-  .loader-word span:nth-child(7){animation-delay:.3s;}
-  @keyframes rise{to{transform:translateY(0);}}
-  .loader-bar{margin-top:2.2rem;width:min(320px,60vw);height:1px;background:var(--line);position:relative;overflow:hidden;}
-  .loader-bar i{position:absolute;inset:0;background:var(--ink);transform:scaleX(0);transform-origin:left;animation:load 1.6s cubic-bezier(.76,0,.24,1) .3s forwards;}
-  @keyframes load{to{transform:scaleX(1);}}
-  .loader-sub{margin-top:1rem;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);text-align:center;}
-
-  /* ---------- NAV ---------- */
-  nav{
-    position:fixed;top:0;left:0;right:0;z-index:90;
-    display:flex;align-items:center;justify-content:space-between;
-    padding:1.4rem clamp(1.2rem,4vw,3.5rem);mix-blend-mode:difference;
+  .hero-content{margin-top:30px}
+  .hero h1{font-size:clamp(4rem,17vw,7rem)}
+  .hero-model{
+    width:100vw;height:100vw;
+    right:-12vw;top:auto;bottom:40px;
+    transform:none;opacity:.8;
   }
-  .logo{font-weight:900;letter-spacing:-.04em;font-size:1.05rem;display:flex;align-items:center;gap:.55rem;}
-  .logo-dot{width:8px;height:8px;border-radius:50%;background:var(--ink);animation:pulse 2.6s ease-in-out infinite;}
-  @keyframes pulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(.55);opacity:.5;}}
-  .nav-links{display:flex;gap:2rem;font-size:.78rem;letter-spacing:.06em;}
-  .nav-links a{text-transform:uppercase;opacity:.62;transition:opacity .3s;}
-  .nav-links a:hover{opacity:1;}
-  .nav-cta{font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;border:1px solid var(--ink);border-radius:999px;padding:.6rem 1.2rem;transition:background .35s,color .35s;}
-  .nav-cta:hover{background:var(--ink);color:var(--bg);}
-
-  /* ---------- HERO ---------- */
-  header{
-    min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;
-    position:relative;padding:8rem clamp(1.2rem,4vw,3.5rem) 4rem;
-  }
-  .kicker{font-size:.7rem;letter-spacing:.34em;text-transform:uppercase;color:var(--muted);margin-bottom:1.6rem;display:flex;align-items:center;gap:.8rem;}
-  .kicker::before{content:"";width:34px;height:1px;background:var(--muted);}
-  h1{font-size:clamp(2.6rem,10.5vw,9rem);font-weight:800;line-height:.88;letter-spacing:-.055em;max-width:14ch;}
-  h1 em{font-style:normal;color:transparent;-webkit-text-stroke:1px var(--ink);}
-  .hero-bottom{display:flex;flex-wrap:wrap;gap:2.5rem;align-items:flex-end;justify-content:space-between;margin-top:3.5rem;}
-  .hero-p{max-width:40ch;font-size:clamp(.95rem,1.4vw,1.15rem);line-height:1.55;color:var(--muted);font-weight:300;}
-  .hero-p strong{color:var(--ink);font-weight:500;}
-  .hero-actions{display:flex;gap:1rem;flex-wrap:wrap;}
-  .btn{display:inline-flex;align-items:center;gap:.6rem;padding:1rem 1.9rem;border-radius:999px;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-weight:600;transition:transform .4s cubic-bezier(.16,1,.3,1),background .35s,color .35s,border-color .35s;}
-  .btn-solid{background:var(--ink);color:var(--bg);}
-  .btn-solid:hover{transform:translateY(-3px);}
-  .btn-ghost{border:1px solid var(--line);}
-  .btn-ghost:hover{border-color:var(--ink);transform:translateY(-3px);}
-
-  .watch-stage{position:absolute;right:clamp(-4rem,3vw,5rem);top:50%;transform:translateY(-50%);width:min(48vw,560px);aspect-ratio:1;z-index:1;}
-  @media(max-width:900px){.watch-stage{position:relative;right:auto;top:auto;transform:none;width:min(86vw,380px);margin:2.5rem auto 0;}}
-
-  /* ---------- MARQUEE ---------- */
-  .marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:1.6rem 0;overflow:hidden;white-space:nowrap;background:var(--bg-soft);}
-  .marquee-track{display:inline-flex;animation:slide 34s linear infinite;}
-  .marquee:hover .marquee-track{animation-play-state:paused;}
-  @keyframes slide{to{transform:translateX(-50%);}}
-  .marquee-item{font-size:clamp(1.1rem,2.1vw,1.9rem);font-weight:700;letter-spacing:-.02em;padding:0 1.6rem;display:inline-flex;align-items:center;gap:1.6rem;color:var(--muted);}
-  .marquee-item b{color:var(--ink);font-weight:700;}
-  .marquee-item::after{content:"◆";font-size:.55em;opacity:.4;}
-
-  /* ---------- SECTIONS ---------- */
-  section{padding:clamp(5rem,12vw,11rem) clamp(1.2rem,4vw,3.5rem);}
-  .sec-head{display:flex;flex-wrap:wrap;gap:1rem 3rem;align-items:baseline;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:1.4rem;margin-bottom:4rem;}
-  .sec-num{font-size:.72rem;letter-spacing:.3em;color:var(--muted);text-transform:uppercase;}
-  h2{font-size:clamp(1.9rem,5.2vw,4.2rem);font-weight:800;letter-spacing:-.045em;line-height:.95;max-width:20ch;}
-  .sec-note{max-width:32ch;font-size:.9rem;color:var(--muted);line-height:1.6;font-weight:300;}
-
-  .reveal{opacity:0;transform:translateY(38px);transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1s cubic-bezier(.16,1,.3,1);}
-  .reveal.in{opacity:1;transform:none;}
-
-  /* ---------- NEGATIONS ---------- */
-  .neg-list{display:flex;flex-direction:column;}
-  .neg-row{display:flex;flex-wrap:wrap;align-items:center;gap:1rem 1.4rem;padding:clamp(1rem,2.4vw,1.9rem) 0;border-bottom:1px solid var(--line);font-size:clamp(1.2rem,3.6vw,2.8rem);font-weight:600;letter-spacing:-.035em;line-height:1;}
-  .neg-row .strike{text-decoration:line-through;text-decoration-thickness:2px;color:var(--muted);transition:opacity .7s;}
-  .neg-row .arrow{font-size:.75rem;color:var(--muted);letter-spacing:.2em;transition:transform .6s cubic-bezier(.16,1,.3,1);}
-  .neg-row .plus{opacity:0;transform:translateX(-14px);color:var(--ink);transition:opacity .7s .1s,transform .7s .1s;}
-  .neg-row.in .strike{opacity:.32;}
-  .neg-row.in .arrow{transform:translateX(8px);}
-  .neg-row.in .plus{opacity:1;transform:none;}
-
-  /* ---------- FEATURES ---------- */
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1px;background:var(--line);}
-  .card{background:var(--bg);padding:clamp(1.8rem,3.4vw,2.8rem);display:flex;flex-direction:column;gap:1.1rem;min-height:290px;transition:background .5s;}
-  .card:hover{background:#1d1d1b;}
-  .card-idx{font-size:.7rem;letter-spacing:.24em;color:var(--muted);}
-  .card h3{font-size:1.22rem;font-weight:700;letter-spacing:-.025em;margin-top:auto;}
-  .card p{font-size:.88rem;line-height:1.6;color:var(--muted);font-weight:300;}
-  .card .glyph{width:30px;height:30px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;font-size:.7rem;color:var(--muted);}
-
-  /* ---------- 3D VIEWER SECTION ---------- */
-  #montre{background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
-  .viewer-wrap{display:grid;grid-template-columns:1fr 1.35fr;gap:clamp(1.5rem,4vw,4rem);align-items:center;}
-  @media(max-width:900px){.viewer-wrap{grid-template-columns:1fr;}}
-  .viewer-copy{display:flex;flex-direction:column;gap:1.4rem;}
-  .viewer-copy h3{font-size:clamp(1.4rem,3vw,2.1rem);font-weight:800;letter-spacing:-.04em;line-height:1.05;}
-  .viewer-copy p{font-size:.92rem;line-height:1.65;color:var(--muted);font-weight:300;max-width:38ch;}
-  .specs{display:flex;flex-direction:column;gap:.75rem;margin-top:.6rem;border-top:1px solid var(--line);padding-top:1.4rem;}
-  .spec{display:flex;justify-content:space-between;gap:1rem;font-size:.78rem;letter-spacing:.04em;}
-  .spec span:first-child{color:var(--muted);text-transform:uppercase;letter-spacing:.14em;font-size:.68rem;}
-  .hint{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:.7rem;}
-  .hint::before{content:"";width:22px;height:1px;background:var(--muted);}
-
-  #canvas-host{position:relative;width:100%;aspect-ratio:1;border:1px solid var(--line);border-radius:2px;overflow:hidden;
-    background:radial-gradient(circle at 50% 42%,#232321 0%,#191917 68%,#141412 100%);cursor:grab;touch-action:none;}
-  #canvas-host.grabbing{cursor:grabbing;}
-  #canvas-host canvas{display:block;width:100%;height:100%;}
-  .viewer-tag{position:absolute;left:1rem;bottom:1rem;font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);pointer-events:none;}
-  .viewer-ctrl{position:absolute;right:1rem;top:1rem;display:flex;gap:.4rem;pointer-events:auto;}
-  .viewer-ctrl button{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:rgba(25,25,23,.6);color:var(--ink);font-size:.8rem;cursor:pointer;transition:border-color .3s,background .3s;display:grid;place-items:center;}
-  .viewer-ctrl button:hover{border-color:var(--ink);background:rgba(238,238,238,.1);}
-
-  /* ---------- COLLECTION ---------- */
-  .lineup{display:flex;gap:clamp(1rem,3vw,2.6rem);overflow-x:auto;padding-bottom:1.4rem;scroll-snap-type:x mandatory;scrollbar-width:thin;}
-  .lineup::-webkit-scrollbar{height:2px;}
-  .lineup::-webkit-scrollbar-thumb{background:var(--muted);}
-  .watch-card{flex:0 0 min(340px,78vw);scroll-snap-align:center;border:1px solid var(--line);padding:2rem 1.8rem;display:flex;flex-direction:column;gap:1.5rem;min-height:430px;transition:transform .6s cubic-bezier(.16,1,.3,1),border-color .5s;}
-  .watch-card:hover{transform:translateY(-8px);border-color:rgba(238,238,238,.38);}
-  .wc-face{height:170px;width:170px;border-radius:50%;margin:0 auto;border:1px solid rgba(238,238,238,.2);background:radial-gradient(circle at 38% 32%,#2c2c29,#141412 70%);position:relative;display:grid;place-items:center;box-shadow:0 22px 50px rgba(0,0,0,.6);}
-  .wc-hand{position:absolute;width:2px;height:30%;background:var(--ink);bottom:50%;left:calc(50% - 1px);transform-origin:bottom;animation:tick 60s steps(60) infinite;border-radius:2px;}
-  @keyframes tick{to{transform:rotate(360deg);}}
-  .wc-name{font-size:1.05rem;font-weight:700;letter-spacing:-.02em;}
-  .wc-meta{font-size:.78rem;color:var(--muted);line-height:1.6;font-weight:300;}
-  .wc-price{margin-top:auto;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;align-items:center;}
-  .wc-price b{color:var(--ink);font-weight:600;font-size:.95rem;letter-spacing:0;}
-
-  /* ---------- MANIFESTO ---------- */
-  .manifesto{background:var(--bg-soft);border-top:1px solid var(--line);}
-  .manifesto p{font-size:clamp(1.35rem,3.9vw,3.1rem);font-weight:600;letter-spacing:-.04em;line-height:1.18;max-width:24ch;}
-  .manifesto p + p{margin-top:2rem;color:var(--muted);font-weight:300;font-size:clamp(1rem,1.7vw,1.35rem);max-width:44ch;line-height:1.6;}
-
-  /* ---------- CTA ---------- */
-  .final{text-align:center;display:flex;flex-direction:column;align-items:center;gap:2rem;}
-  .final h2{max-width:16ch;}
-  .mail{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;border:1px solid var(--line);padding:.5rem;border-radius:999px;width:min(560px,100%);}
-  .mail input{flex:1;min-width:200px;background:none;border:none;outline:none;color:var(--ink);font-family:var(--font);font-size:.9rem;padding:1rem 1.4rem;}
-  .mail input::placeholder{color:var(--muted);}
-  .mail button{background:var(--ink);color:var(--bg);border:none;border-radius:999px;padding:1rem 1.8rem;font-family:var(--font);font-size:.76rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:opacity .3s;}
-  .mail button:hover{opacity:.8;}
-  .fine{font-size:.72rem;color:var(--muted);letter-spacing:.04em;}
-
-  /* ---------- FOOTER ---------- */
-  footer{border-top:1px solid var(--line);padding:3.5rem clamp(1.2rem,4vw,3.5rem) 2.5rem;display:flex;flex-wrap:wrap;gap:2rem;justify-content:space-between;align-items:flex-end;}
-  .foot-links{display:flex;flex-wrap:wrap;gap:1.6rem;font-size:.78rem;color:var(--muted);}
-  .foot-links a:hover{color:var(--ink);}
-  .foot-mark{font-size:clamp(2.4rem,9vw,7rem);font-weight:900;letter-spacing:-.06em;line-height:.85;opacity:.1;}
-  .foot-legal{font-size:.72rem;color:var(--muted);line-height:1.7;max-width:30ch;}
-
-  @media (prefers-reduced-motion:reduce){
-    *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;}
-    .reveal{opacity:1;transform:none;}
-  }
+  .hero-description{max-width:330px;font-size:12px}
+  .hero-index{bottom:20px}
+  section{padding:85px 7vw}
+  .section-top{display:block;margin-bottom:40px}
+  .section-note{margin-top:22px}
+  .principle-row{grid-template-columns:1fr 25px 1fr;gap:8px}
+  .principle-before,.principle-after{font-size:15px;line-height:1.3}
+  .features{grid-template-columns:1fr}
+  .feature{min-height:230px}
+  .feature-symbol{margin:25px 0}
+  .viewer{aspect-ratio:.9}
+  .collection{grid-template-columns:1fr}
+  .product-visual{height:230px}
+  .manifesto{padding-top:100px;padding-bottom:100px}
+  .waitlist{border-radius:12px;flex-direction:column;border:0;gap:10px}
+  .waitlist input{border:1px solid var(--line);border-radius:30px;padding:17px}
+  .waitlist button{padding:17px}
+  footer{padding:35px 7vw;display:block}
+  .footer-logo{margin-top:35px}
+}
 </style>
 </head>
+
 <body>
 
-<!-- LOADER -->
+<!-- CHARGEMENT INDEPENDANT DE LA 3D -->
 <div id="loader">
-  <div class="loader-inner">
-    <div class="loader-word"><span>D</span><span>E</span><span>S</span><span>T</span><span>I</span><span>N</span><span>Y</span></div>
-    <div class="loader-bar"><i></i></div>
-    <div class="loader-sub">Calcul des probabilités</div>
+  <div class="loader-content">
+    <div class="loader-logo">DESTINY</div>
+    <div class="loader-line"><span></span></div>
+    <div class="loader-caption">Take control of your destiny</div>
   </div>
 </div>
 
-<!-- NAV -->
+<script>
+(function(){
+  const loader=document.getElementById('loader');
+  let hidden=false;
+  function hideLoader(){
+    if(hidden)return;
+    hidden=true;
+    setTimeout(()=>loader?.classList.add('done'),500);
+  }
+  if(document.readyState==='complete'){
+    hideLoader();
+  }else{
+    window.addEventListener('load',hideLoader,{once:true});
+  }
+  setTimeout(hideLoader,3500);
+})();
+</script>
+
 <nav>
-  <a href="#" class="logo"><span class="logo-dot"></span>DESTINY</a>
-  <div class="nav-links">
-    <a href="#principe">Principe</a>
-    <a href="#montre">La montre</a>
+  <a href="#" class="logo">DESTINY<span>.</span></a>
+  <button class="menu-toggle" id="menu-toggle" aria-label="Ouvrir le menu">☰</button>
+  <div class="nav-links" id="nav-links">
+    <a href="#concept">Le concept</a>
+    <a href="#mechanism">Technologie</a>
+    <a href="#watch">La montre</a>
     <a href="#collection">Collection</a>
-    <a href="#manifeste">Manifeste</a>
   </div>
-  <a href="#acces" class="nav-cta">Précommander</a>
+  <a href="#access" class="nav-cta">Accès exclusif ↗</a>
 </nav>
 
-<!-- HERO -->
-<header>
-  <div class="watch-stage" id="hero-3d"></div>
-
-  <div class="kicker reveal">Montre à conséquences — série 01</div>
-  <h1 class="reveal">Porte l'heure<br /><em>et</em> la suite.</h1>
-
-  <div class="hero-bottom">
-    <p class="hero-p reveal">
-      Destiny ne te donne pas l'heure. Elle te donne <strong>ce qui va suivre</strong>.
-      Chaque décision que tu prends est lue, pesée, projetée — et affichée sur ton poignet avant que tu appuies.
+<header class="hero">
+  <div class="hero-content">
+    <div class="eyebrow">Beyond time. Beyond limits.</div>
+    <h1>TAKE<br><span class="outline">CONTROL</span><br>OF YOUR<br>DESTINY.</h1>
+    <p class="hero-description">
+      Le temps avance. Vos choix dessinent la suite.
+      <strong>DESTINY</strong> transforme votre rapport au temps en vous donnant une nouvelle perspective sur chaque décision.
     </p>
-    <div class="hero-actions reveal">
-      <a href="#montre" class="btn btn-solid">Faire tourner la montre</a>
-      <a href="#principe" class="btn btn-ghost">Comment ça marche</a>
+    <div class="hero-actions">
+      <a href="#watch" class="btn btn-primary">Découvrir la montre ↗</a>
+      <a href="#concept" class="btn btn-outline">Notre vision</a>
     </div>
   </div>
+  <div class="hero-model">
+    <div id="hero-watch"></div>
+  </div>
+  <div class="hero-index">DESTINY — COLLECTION 001 / 2026</div>
 </header>
 
-<!-- MARQUEE -->
 <div class="marquee">
   <div class="marquee-track">
-    <span class="marquee-item">Pas de prédiction magique — <b>des probabilités lisibles</b></span>
-    <span class="marquee-item">Pas de notif en trop — <b>une seule, la bonne</b></span>
-    <span class="marquee-item">Pas de jugement — <b>juste des conséquences</b></span>
-    <span class="marquee-item">Pas de prédiction magique — <b>des probabilités lisibles</b></span>
-    <span class="marquee-item">Pas de notif en trop — <b>une seule, la bonne</b></span>
-    <span class="marquee-item">Pas de jugement — <b>juste des conséquences</b></span>
+    <span>TIME IS YOURS <b>◆</b></span>
+    <span>YOUR CHOICE. YOUR FUTURE. <b>◆</b></span>
+    <span>BEYOND TIME <b>◆</b></span>
+    <span>TAKE CONTROL <b>◆</b></span>
+    <span>TIME IS YOURS <b>◆</b></span>
+    <span>YOUR CHOICE. YOUR FUTURE. <b>◆</b></span>
+    <span>BEYOND TIME <b>◆</b></span>
+    <span>TAKE CONTROL <b>◆</b></span>
   </div>
 </div>
 
-<!-- PRINCIPE -->
-<section id="principe">
-  <div class="sec-head">
-    <span class="sec-num reveal">01 — Principe</span>
-    <h2 class="reveal">Ce qu'on te barre,<br />ce qu'on te donne.</h2>
-    <p class="sec-note reveal">On ne te vend pas un pouvoir. On te retire trois habitudes et on t'en rend une.</p>
+<section id="concept">
+  <div class="section-top">
+    <div>
+      <div class="section-number">01 — Notre vision</div>
+      <h2 class="section-title reveal">Le futur ne<br>se subit pas.</h2>
+    </div>
+    <p class="section-note reveal">
+      Chaque décision ouvre une possibilité. Chaque possibilité construit une trajectoire. Et si vous pouviez en apercevoir les conséquences avant de choisir ?
+    </p>
   </div>
 
-  <div class="neg-list">
-    <div class="neg-row reveal-neg"><span class="strike">Deviner ce qui va se passer</span><span class="arrow">→</span><span class="plus">Voir la projection</span></div>
-    <div class="neg-row reveal-neg"><span class="strike">Regretter après coup</span><span class="arrow">→</span><span class="plus">Choisir en connaissance</span></div>
-    <div class="neg-row reveal-neg"><span class="strike">Une montre qui donne l'heure</span><span class="arrow">→</span><span class="plus">Une montre qui donne l'effet</span></div>
-    <div class="neg-row reveal-neg"><span class="strike">Décider seul, dans le flou</span><span class="arrow">→</span><span class="plus">Décider avec un futur en visuel</span></div>
-  </div>
-</section>
-
-<!-- FEATURES -->
-<section id="features">
-  <div class="sec-head">
-    <span class="sec-num reveal">02 — Le mécanisme</span>
-    <h2 class="reveal">Quatre couches,<br />un seul geste.</h2>
-    <p class="sec-note reveal">Tu regardes ton poignet. Tu comprends où tu vas. Tu décides.</p>
-  </div>
-
-  <div class="grid">
-    <div class="card reveal">
-      <span class="glyph">◇</span>
-      <span class="card-idx">01 / LECTURE</span>
-      <h3>Le cadran observe</h3>
-      <p>Destiny capte le contexte : l'heure, ta position, ton rythme, les décisions en attente autour de toi. Rien de plus que nécessaire, rien qui sorte de la montre.</p>
+  <div class="principle-list">
+    <div class="principle-row reveal">
+      <span class="principle-before">Subir le temps</span>
+      <span class="principle-arrow">→</span>
+      <span class="principle-after">Maîtriser son rythme</span>
     </div>
-    <div class="card reveal">
-      <span class="glyph">◈</span>
-      <span class="card-idx">02 / CALCUL</span>
-      <h3>L'écart se trace</h3>
-      <p>Chaque option ouvre une branche. Destiny la fait diverger en quelques secondes, puis affiche l'écart : le tien, celui des autres, celui dans six mois.</p>
+    <div class="principle-row reveal">
+      <span class="principle-before">Avancer dans le doute</span>
+      <span class="principle-arrow">→</span>
+      <span class="principle-after">Visualiser les possibilités</span>
     </div>
-    <div class="card reveal">
-      <span class="glyph">◉</span>
-      <span class="card-idx">03 / AFFICHAGE</span>
-      <h3>Le futur en un regard</h3>
-      <p>Pas de graphes illisibles. Une conséquence à la fois, en clair, sur l'aiguille des conséquences — la troisième, celle qui ne recule jamais.</p>
+    <div class="principle-row reveal">
+      <span class="principle-before">Regretter ses choix</span>
+      <span class="principle-arrow">→</span>
+      <span class="principle-after">Décider en conscience</span>
     </div>
-    <div class="card reveal">
-      <span class="glyph">▣</span>
-      <span class="card-idx">04 / EFFACEMENT</span>
-      <h3>Et ça disparaît</h3>
-      <p>Une fois la décision prise, la projection s'efface. Ce que tu as vu reste pour toi. La branche non choisie ne revient pas te hanter.</p>
+    <div class="principle-row reveal">
+      <span class="principle-before">Regarder l'heure</span>
+      <span class="principle-arrow">→</span>
+      <span class="principle-after">Regarder plus loin</span>
     </div>
   </div>
 </section>
 
-<!-- MONTRE 3D -->
-<section id="montre">
-  <div class="sec-head">
-    <span class="sec-num reveal">03 — La montre</span>
-    <h2 class="reveal">Prends-la<br />dans ta main.</h2>
-    <p class="sec-note reveal">Glisse pour la faire tourner, molette pour zoomer. Elle revient toujours à sa position.</p>
+<section id="mechanism">
+  <div class="section-top">
+    <div>
+      <div class="section-number">02 — La technologie</div>
+      <h2 class="section-title reveal">Une nouvelle<br>vision du temps.</h2>
+    </div>
+    <p class="section-note reveal">
+      Une expérience pensée autour de quatre étapes. Une technologie discrète, au service de vos décisions.
+    </p>
   </div>
 
-  <div class="viewer-wrap">
-    <div class="viewer-copy reveal">
-      <h3>Destiny Série 01</h3>
+  <div class="features">
+    <article class="feature reveal">
+      <div class="feature-number">01 / ANALYSE</div>
+      <div class="feature-symbol">◈</div>
+      <h3>Comprendre</h3>
+      <p>La montre analyse le contexte et les informations utiles pour comprendre la situation dans laquelle vous vous trouvez.</p>
+    </article>
+    <article class="feature reveal">
+      <div class="feature-number">02 / PROJECTION</div>
+      <div class="feature-symbol">⌁</div>
+      <h3>Anticiper</h3>
+      <p>Chaque possibilité ouvre une trajectoire. DESTINY projette plusieurs scénarios et met en évidence leurs différences.</p>
+    </article>
+    <article class="feature reveal">
+      <div class="feature-number">03 / VISUALISATION</div>
+      <div class="feature-symbol">◎</div>
+      <h3>Visualiser</h3>
+      <p>Les conséquences deviennent lisibles. Une information claire, accessible directement depuis votre poignet.</p>
+    </article>
+    <article class="feature reveal">
+      <div class="feature-number">04 / DÉCISION</div>
+      <div class="feature-symbol">✳</div>
+      <h3>Choisir</h3>
+      <p>La montre ne décide jamais à votre place. Elle vous donne une perspective. Le choix reste entièrement le vôtre.</p>
+    </article>
+  </div>
+</section>
+
+<section class="watch-section" id="watch">
+  <div class="section-top">
+    <div>
+      <div class="section-number">03 — L'objet</div>
+      <h2 class="section-title reveal">Designed to<br>be timeless.</h2>
+    </div>
+    <p class="section-note reveal">
+      La précision de l'horlogerie traditionnelle. Une vision tournée vers demain.
+    </p>
+  </div>
+
+  <div class="watch-layout">
+    <div class="watch-copy reveal">
+      <h3>DESTINY<br>Signature 001</h3>
       <p>
-        Boîtier acier brossé 39 mm, lunette cannelée, verre saphir bombé. Trois aiguilles,
-        et cette troisième qui ne mesure pas le temps mais la portée d'un choix.
+        Une silhouette affirmée, un boîtier en acier travaillé et un cadran profond.
+        Chaque détail a été pensé pour créer un équilibre entre élégance, précision et innovation.
       </p>
-      <div class="hint">Fais-la tourner</div>
-      <div class="specs">
-        <div class="spec"><span>Boîtier</span><span>Acier 316L — 39 mm</span></div>
-        <div class="spec"><span>Épaisseur</span><span>11,4 mm</span></div>
-        <div class="spec"><span>Verre</span><span>Saphir bombé anti-reflet</span></div>
-        <div class="spec"><span>Étanchéité</span><span>100 m</span></div>
-        <div class="spec"><span>Mouvement</span><span>Auto — 72 h de réserve</span></div>
-        <div class="spec"><span>Bracelet</span><span>Acier brossé, boucle déployante</span></div>
+      <div class="watch-instruction">↳ Faites glisser pour explorer la montre</div>
+      <div class="specifications">
+        <div class="spec-row"><span>Boîtier</span><span>Acier inoxydable 316L</span></div>
+        <div class="spec-row"><span>Diamètre</span><span>39 mm</span></div>
+        <div class="spec-row"><span>Verre</span><span>Saphir bombé</span></div>
+        <div class="spec-row"><span>Étanchéité</span><span>100 mètres</span></div>
+        <div class="spec-row"><span>Mouvement</span><span>Automatique</span></div>
+        <div class="spec-row"><span>Bracelet</span><span>Acier brossé</span></div>
       </div>
     </div>
 
-    <div class="reveal">
-      <div id="canvas-host">
-        <div class="viewer-ctrl">
-          <button type="button" id="btn-reset" title="Recentrer">⟲</button>
-          <button type="button" id="btn-spin" title="Rotation auto">▶</button>
-        </div>
-        <div class="viewer-tag">Glisser pour tourner</div>
+    <div class="viewer reveal">
+      <div id="watch-canvas"></div>
+      <div class="viewer-controls">
+        <button id="reset-watch" title="Recentrer">↺</button>
+        <button id="spin-watch" title="Rotation automatique">Ⅱ</button>
       </div>
+      <div class="viewer-label">DESTINY SIGNATURE 001 — 3D EXPERIENCE</div>
     </div>
   </div>
 </section>
 
-<!-- COLLECTION -->
 <section id="collection">
-  <div class="sec-head">
-    <span class="sec-num reveal">04 — Collection</span>
-    <h2 class="reveal">Trois cadrans,<br />trois portées.</h2>
-    <p class="sec-note reveal">Glisse pour parcourir. Chaque modèle lit une profondeur de temps différente.</p>
+  <div class="section-top">
+    <div>
+      <div class="section-number">04 — La collection</div>
+      <h2 class="section-title reveal">Three visions.<br>One destiny.</h2>
+    </div>
+    <p class="section-note reveal">
+      Trois interprétations de l'identité DESTINY. Trois caractères, une même exigence.
+    </p>
   </div>
 
-  <div class="lineup">
-    <article class="watch-card reveal">
-      <div class="wc-face"><span class="wc-hand"></span></div>
-      <div>
-        <div class="wc-name">Destiny Heure</div>
-        <p class="wc-meta">Portée : 24 heures. Idéale pour la journée. Aiguille des conséquences à 60 minutes.</p>
-      </div>
-      <div class="wc-price"><span>Série 01</span><b>390 €</b></div>
+  <div class="collection">
+    <article class="product reveal">
+      <div class="product-visual"><div class="product-watch"></div></div>
+      <div class="product-name">Signature 001</div>
+      <p class="product-desc">L'équilibre parfait entre élégance contemporaine et caractère horloger.</p>
+      <div class="product-bottom"><span>Steel Edition</span><strong>390 €</strong></div>
     </article>
-    <article class="watch-card reveal">
-      <div class="wc-face"><span class="wc-hand"></span></div>
-      <div>
-        <div class="wc-name">Destiny Saison</div>
-        <p class="wc-meta">Portée : 6 mois. Conçue pour les choix qui pèsent — travail, ville, engagements.</p>
-      </div>
-      <div class="wc-price"><span>Série 01</span><b>620 €</b></div>
+
+    <article class="product reveal">
+      <div class="product-visual"><div class="product-watch gold"></div></div>
+      <div class="product-name">Signature Gold</div>
+      <p class="product-desc">Une finition précieuse et une présence affirmée. L'élégance dans chaque détail.</p>
+      <div class="product-bottom"><span>Gold Edition</span><strong>620 €</strong></div>
     </article>
-    <article class="watch-card reveal">
-      <div class="wc-face"><span class="wc-hand"></span></div>
-      <div>
-        <div class="wc-name">Destiny Longue</div>
-        <p class="wc-meta">Portée : 10 ans. Édition limitée à 500 pièces, gravées, numérotées.</p>
-      </div>
-      <div class="wc-price"><span>Série 01</span><b>1 450 €</b></div>
+
+    <article class="product reveal">
+      <div class="product-visual"><div class="product-watch black"></div></div>
+      <div class="product-name">Signature Black</div>
+      <p class="product-desc">Une interprétation sombre et minimaliste de l'identité DESTINY.</p>
+      <div class="product-bottom"><span>Black Edition</span><strong>790 €</strong></div>
     </article>
   </div>
 </section>
 
-<!-- MANIFESTE -->
-<section class="manifesto" id="manifeste">
-  <p class="reveal">On ne prédit rien.<br />On éclaire juste une branche.</p>
+<section class="manifesto">
+  <div class="manifesto-label reveal">The Destiny Philosophy</div>
+  <h2 class="reveal">YOUR TIME.<br><span>YOUR CHOICE.</span><br>YOUR DESTINY.</h2>
   <p class="reveal">
-    Destiny existe parce qu'on passe plus de temps à réparer nos décisions qu'à les regarder en face.
-    La montre ne choisit jamais. Elle montre, puis se tait. Le reste t'appartient — y compris le droit de décider contre ce qu'elle affiche.
+    Nous ne croyons pas en un futur écrit à l'avance.
+    Nous croyons en la liberté de choisir, en la force des décisions et en la possibilité de reprendre le contrôle.
+    Le temps vous appartient. Faites-en quelque chose.
   </p>
 </section>
 
-<!-- CTA -->
-<section class="final" id="acces">
-  <span class="sec-num reveal">05 — Accès</span>
-  <h2 class="reveal">Série 01 — liste d'attente ouverte.</h2>
-  <form class="mail reveal" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Inscrit ✓'; this.querySelector('input').value=''; this.querySelector('input').placeholder='Tu es sur la liste.';">
-    <input type="email" placeholder="ton@email.com" required />
-    <button type="submit">Rejoindre</button>
+<section class="final-section" id="access">
+  <div class="section-number reveal">05 — Accès privilégié</div>
+  <h2 class="reveal">Your next chapter starts now.</h2>
+  <p class="reveal">Entrez dans l'univers DESTINY et soyez informé du lancement de la première collection.</p>
+
+  <form class="waitlist reveal" id="waitlist-form">
+    <input type="email" id="email-input" placeholder="Votre adresse e-mail" required>
+    <button type="submit">Rejoindre ↗</button>
   </form>
-  <p class="fine reveal">Pas de spam. Un seul message quand la série ouvre.</p>
+  <div class="form-message" id="form-message"></div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div>
-    <div class="foot-links">
-      <a href="#principe">Principe</a>
-      <a href="#montre">La montre</a>
+    <div class="footer-links">
+      <a href="#concept">Concept</a>
+      <a href="#mechanism">Technologie</a>
+      <a href="#watch">La montre</a>
       <a href="#collection">Collection</a>
-      <a href="#manifeste">Manifeste</a>
-      <a href="#">Instagram</a>
-      <a href="#">Contact</a>
+      <a href="#access">Contact</a>
     </div>
-    <p class="foot-legal" style="margin-top:1.4rem;">Destiny est un objet de projection probabiliste. Aucune projection n'est une certitude.</p>
+    <p class="footer-note">© 2026 DESTINY — ALL RIGHTS RESERVED.<br>Le futur vous appartient.</p>
   </div>
-  <div class="foot-mark">DESTINY</div>
+  <div class="footer-logo">DESTINY.</div>
 </footer>
 
+<script>
+/* MENU MOBILE */
+const menuToggle=document.getElementById('menu-toggle');
+const navLinks=document.getElementById('nav-links');
+
+menuToggle.addEventListener('click',()=>{
+  navLinks.classList.toggle('open');
+  menuToggle.textContent=navLinks.classList.contains('open')?'×':'☰';
+});
+navLinks.querySelectorAll('a').forEach(link=>{
+  link.addEventListener('click',()=>{
+    navLinks.classList.remove('open');
+    menuToggle.textContent='☰';
+  });
+});
+
+/* ANIMATIONS AU SCROLL */
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+},{threshold:.12});
+
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+/* FORMULAIRE DE DÉMONSTRATION */
+document.getElementById('waitlist-form').addEventListener('submit',event=>{
+  event.preventDefault();
+  const input=document.getElementById('email-input');
+  const message=document.getElementById('form-message');
+  if(!input.checkValidity()){
+    input.reportValidity();
+    return;
+  }
+  message.textContent='Merci. Votre intérêt pour DESTINY est bien enregistré sur cette démonstration.';
+  input.value='';
+});
+</script>
+
+<!-- THREE.JS : CHARGEMENT SÉPARÉ DU SITE -->
 <script type="importmap">
 {
-  "imports": {
-    "three": "[unpkg.com](https://unpkg.com/three@0.160.0/build/three.module.js)",
-    "three/addons/": "[unpkg.com](https://unpkg.com/three@0.160.0/examples/jsm/)"
+  "imports":{
+    "three":"https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"
   }
 }
 </script>
@@ -413,486 +1005,397 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-/* =========================================================
-   CONSTRUCTION DE LA MONTRE (style plongée / Omega)
-   ========================================================= */
+/* CONSTRUCTION DE LA MONTRE */
 function buildWatch(){
-  const group = new THREE.Group();
+  const watch=new THREE.Group();
 
-  const STEEL      = new THREE.MeshStandardMaterial({ color:0xC9CCD1, metalness:1.0, roughness:0.28, envMapIntensity:1.4 });
-  const STEEL_BRUSH= new THREE.MeshStandardMaterial({ color:0xA8ADB4, metalness:1.0, roughness:0.55, envMapIntensity:1.1 });
-  const STEEL_DARK = new THREE.MeshStandardMaterial({ color:0x6E7278, metalness:1.0, roughness:0.42, envMapIntensity:1.0 });
-  const GLASS      = new THREE.MeshPhysicalMaterial({ color:0xffffff, metalness:0, roughness:0.03, transmission:0.92, thickness:0.35, ior:1.5, transparent:true, opacity:0.55 });
-  const DIAL       = new THREE.MeshStandardMaterial({ color:0x14161A, metalness:0.35, roughness:0.72, envMapIntensity:0.6 });
-  const DIAL_INNER = new THREE.MeshStandardMaterial({ color:0x1C2026, metalness:0.5, roughness:0.5 });
-  const LUME       = new THREE.MeshStandardMaterial({ color:0xEAF6E8, emissive:0x9fe3c4, emissiveIntensity:0.85, roughness:0.6 });
-  const HAND       = new THREE.MeshStandardMaterial({ color:0xE8EAEC, metalness:1.0, roughness:0.22, envMapIntensity:1.5 });
-  const HAND_TIP   = new THREE.MeshStandardMaterial({ color:0xD8DEE6, metalness:1.0, roughness:0.35 });
-  const RED        = new THREE.MeshStandardMaterial({ color:0xC0552F, metalness:0.7, roughness:0.35 });
+  const steel=new THREE.MeshStandardMaterial({
+    color:0xbfc4c8,metalness:.95,roughness:.27
+  });
+  const brushed=new THREE.MeshStandardMaterial({
+    color:0x777e83,metalness:.95,roughness:.48
+  });
+  const darkSteel=new THREE.MeshStandardMaterial({
+    color:0x34393e,metalness:.85,roughness:.3
+  });
+  const dial=new THREE.MeshStandardMaterial({
+    color:0x101419,metalness:.35,roughness:.65
+  });
+  const white=new THREE.MeshStandardMaterial({
+    color:0xf0f1ed,metalness:.8,roughness:.25
+  });
+  const lume=new THREE.MeshStandardMaterial({
+    color:0xdcebdc,emissive:0x658c72,emissiveIntensity:.35
+  });
+  const red=new THREE.MeshStandardMaterial({
+    color:0xb95b48,metalness:.7,roughness:.25
+  });
 
-  const R = 1;            // rayon cadran
-  const CASING = R * 1.22;
+  const radius=1.15;
 
-  /* --- BOÎTIER (corps principal) --- */
-  const caseBody = new THREE.Mesh(
-    new THREE.CylinderGeometry(CASING, CASING * 0.985, 0.42, 96),
-    STEEL_BRUSH
+  /* BOÎTIER */
+  const body=new THREE.Mesh(
+    new THREE.CylinderGeometry(radius,radius*.97,.38,96),
+    brushed
   );
-  caseBody.rotation.x = Math.PI / 2;
-  caseBody.position.z = -0.02;
-  group.add(caseBody);
+  body.rotation.x=Math.PI/2;
+  watch.add(body);
 
-  /* chanfrein avant */
-  const bezelChamfer = new THREE.Mesh(
-    new THREE.CylinderGeometry(CASING * 1.005, CASING * 0.9, 0.1, 96),
-    STEEL
+  /* LUNETTE */
+  const bezel=new THREE.Mesh(
+    new THREE.CylinderGeometry(radius*1.06,radius,.15,96),
+    steel
   );
-  bezelChamfer.rotation.x = Math.PI / 2;
-  bezelChamfer.position.z = 0.19;
-  group.add(bezelChamfer);
+  bezel.rotation.x=Math.PI/2;
+  bezel.position.z=.23;
+  watch.add(bezel);
 
-  /* --- LUNETTE CANNELÉE (scalloped bezel, style plongée) --- */
-  const bezelGroup = new THREE.Group();
-  const bezelCore = new THREE.Mesh(
-    new THREE.CylinderGeometry(CASING * 1.0, CASING * 1.0, 0.13, 96, 1, false),
-    STEEL
+  /* INSERT */
+  const insert=new THREE.Mesh(
+    new THREE.RingGeometry(radius*.79,radius*.99,96),
+    darkSteel
   );
-  bezelCore.rotation.x = Math.PI / 2;
-  bezelGroup.add(bezelCore);
+  insert.position.z=.315;
+  watch.add(insert);
 
-  // 40 crans autour de la lunette
-  const NOTCHES = 40;
-  const notchGeo = new THREE.BoxGeometry(0.075, 0.075, 0.13);
-  for (let i = 0; i < NOTCHES; i++){
-    const ang = (i / NOTCHES) * Math.PI * 2;
-    const notch = new THREE.Mesh(notchGeo, STEEL);
-    notch.position.set(Math.cos(ang) * CASING * 1.005, Math.sin(ang) * CASING * 1.005, 0.06);
-    notch.rotation.z = ang;
-    bezelGroup.add(notch);
-  }
-  bezelGroup.rotation.x = Math.PI / 2;
-  bezelGroup.position.z = 0.26;
-  group.add(bezelGroup);
-
-  /* --- LUNETTE PLATE INTERNE + INSERT NOIR --- */
-  const insert = new THREE.Mesh(
-    new THREE.RingGeometry(CASING * 0.80, CASING * 0.965, 96),
-    new THREE.MeshStandardMaterial({ color:0x121417, metalness:0.6, roughness:0.6 })
-  );
-  insert.position.z = 0.335;
-  group.add(insert);
-
-  /* graduations de la lunette */
-  for (let i = 0; i < 60; i++){
-    const ang = (i / 60) * Math.PI * 2;
-    const major = i % 5 === 0;
-    const g = new THREE.PlaneGeometry(major ? 0.035 : 0.018, major ? 0.085 : 0.045);
-    const m = new THREE.Mesh(g, i === 0 ? RED : new THREE.MeshStandardMaterial({ color:0xEDEFF2, metalness:0.4, roughness:0.4 }));
-    m.position.set(
-      Math.cos(ang) * CASING * 0.885,
-      Math.sin(ang) * CASING * 0.885,
-      0.342
+  /* CRANS */
+  for(let i=0;i<48;i++){
+    const angle=i/48*Math.PI*2;
+    const notch=new THREE.Mesh(
+      new THREE.BoxGeometry(.075,.12,.12),
+      steel
     );
-    m.rotation.z = ang - Math.PI / 2;
-    group.add(m);
+    notch.position.set(
+      Math.cos(angle)*radius*1.045,
+      Math.sin(angle)*radius*1.045,
+      .24
+    );
+    notch.rotation.z=angle;
+    watch.add(notch);
   }
 
-  /* --- CADRAN --- */
-  const dial = new THREE.Mesh(
-    new THREE.CircleGeometry(R * 1.16, 96),
-    DIAL
+  /* CADRAN */
+  const face=new THREE.Mesh(
+    new THREE.CircleGeometry(radius*.82,96),
+    dial
   );
-  dial.position.z = 0.29;
-  group.add(dial);
+  face.position.z=.32;
+  watch.add(face);
 
-  const dialInner = new THREE.Mesh(
-    new THREE.CircleGeometry(R * 0.86, 96),
-    DIAL_INNER
+  /* CERCLE INTÉRIEUR */
+  const innerRing=new THREE.Mesh(
+    new THREE.RingGeometry(.78,.80,96),
+    steel
   );
-  dialInner.position.z = 0.295;
-  group.add(dialInner);
+  innerRing.position.z=.325;
+  watch.add(innerRing);
 
-  /* --- INDEX HEURES (appliqués, avec lume) --- */
-  for (let h = 0; h < 12; h++){
-    const ang = (h / 12) * Math.PI * 2 - Math.PI / 2;
-    const isCardinal = h % 3 === 0;
-
-    // corps métallique de l'index
-    const idxGeo = isCardinal
-      ? new THREE.BoxGeometry(0.075, 0.26, 0.035)
-      : new THREE.BoxGeometry(0.045, 0.19, 0.03);
-    const idx = new THREE.Mesh(idxGeo, HAND_TIP);
-    const rIdx = R * 0.87;
-    idx.position.set(Math.cos(ang) * rIdx, Math.sin(ang) * rIdx, 0.315);
-    idx.rotation.z = ang + Math.PI / 2;
-    group.add(idx);
-
-    // partie lumineuse
-    const lumeGeo = isCardinal
-      ? new THREE.BoxGeometry(0.045, 0.17, 0.012)
-      : new THREE.BoxGeometry(0.024, 0.11, 0.012);
-    const lumePart = new THREE.Mesh(lumeGeo, LUME);
-    lumePart.position.set(Math.cos(ang) * rIdx, Math.sin(ang) * rIdx, 0.338);
-    lumePart.rotation.z = ang + Math.PI / 2;
-    group.add(lumePart);
+  /* INDEX */
+  for(let i=0;i<60;i++){
+    const angle=i/60*Math.PI*2-Math.PI/2;
+    const major=i%5===0;
+    const marker=new THREE.Mesh(
+      new THREE.BoxGeometry(major?.045:.018,major?.13:.055,.025),
+      major?white:steel
+    );
+    marker.position.set(
+      Math.cos(angle)*.91,
+      Math.sin(angle)*.91,
+      .35
+    );
+    marker.rotation.z=angle+Math.PI/2;
+    watch.add(marker);
   }
 
-  /* index triangle à 12h */
-  const tri = new THREE.Mesh(
-    new THREE.CylinderGeometry(0, 0.085, 0.02, 3),
-    LUME
+  /* INDEX LUMINEUX */
+  for(let i=0;i<12;i++){
+    const angle=i/12*Math.PI*2-Math.PI/2;
+    const marker=new THREE.Mesh(
+      new THREE.BoxGeometry(i%3===0?.07:.035,i%3===0?.15:.09,.025),
+      lume
+    );
+    marker.position.set(
+      Math.cos(angle)*.76,
+      Math.sin(angle)*.76,
+      .36
+    );
+    marker.rotation.z=angle+Math.PI/2;
+    watch.add(marker);
+  }
+
+  /* AIGUILLES */
+  const hands=new THREE.Group();
+  hands.position.z=.39;
+
+  function makeHand(length,width,material){
+    const hand=new THREE.Group();
+    const shaft=new THREE.Mesh(
+      new THREE.BoxGeometry(width,length,.025),
+      material
+    );
+    shaft.position.y=length*.34;
+    hand.add(shaft);
+    const tip=new THREE.Mesh(
+      new THREE.ConeGeometry(width*.8,.13,4),
+      material
+    );
+    tip.rotation.z=0;
+    tip.position.y=length*.34+length*.5;
+    hand.add(tip);
+    hands.add(hand);
+    return hand;
+  }
+
+  const hourHand=makeHand(.57,.075,white);
+  const minuteHand=makeHand(.78,.05,white);
+  const secondHand=makeHand(.95,.018,red);
+
+  hourHand.rotation.z=-.8;
+  minuteHand.rotation.z=.6;
+
+  const pin=new THREE.Mesh(
+    new THREE.CylinderGeometry(.07,.07,.07,24),
+    steel
   );
-  tri.rotation.x = Math.PI / 2;
-  tri.position.set(0, R * 0.88, 0.34);
-  group.add(tri);
+  pin.rotation.x=Math.PI/2;
+  pin.position.z=.02;
+  hands.add(pin);
+  watch.add(hands);
 
-  /* --- AIGUILLES --- */
-  const handsGroup = new THREE.Group();
-  handsGroup.position.z = 0.36;
-
-  // heure
-  const hourHand = new THREE.Group();
-  const hH = new THREE.Mesh(new THREE.BoxGeometry(0.085, 0.52, 0.028), HAND);
-  hH.position.y = 0.20;
-  const hTip = new THREE.Mesh(new THREE.BoxGeometry(0.055, 0.2, 0.03), LUME);
-  hTip.position.y = 0.40;
-  hourHand.add(hH, hTip);
-  hourHand.rotation.z = -Math.PI / 3;
-  handsGroup.add(hourHand);
-
-  // minute
-  const minHand = new THREE.Group();
-  const mH = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.78, 0.026), HAND);
-  mH.position.y = 0.33;
-  const mTip = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.24, 0.028), LUME);
-  mTip.position.y = 0.66;
-  minHand.add(mH, mTip);
-  minHand.rotation.z = Math.PI / 5;
-  handsGroup.add(minHand);
-
-  // seconde (la "troisème aiguille" — celle des conséquences)
-  const secHand = new THREE.Group();
-  const sH = new THREE.Mesh(new THREE.BoxGeometry(0.022, 0.98, 0.02), RED);
-  sH.position.y = 0.36;
-  const sTail = new THREE.Mesh(new THREE.BoxGeometry(0.03, 0.22, 0.02), RED);
-  sTail.position.y = -0.13;
-  const sHub = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.055, 0.03, 24), HAND);
-  sHub.rotation.x = Math.PI / 2;
-  secHand.add(sH, sTail, sHub);
-  secHand.rotation.z = Math.PI * 1.15;
-  handsGroup.add(secHand);
-
-  // axe central
-  const centerPin = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 0.09, 24), STEEL_DARK);
-  centerPin.rotation.x = Math.PI / 2;
-  centerPin.position.z = 0.375;
-  group.add(centerPin);
-
-  group.add(handsGroup);
-
-  /* --- COURONNE + PROTECTIONS --- */
-  const crown = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.11, 0.11, 0.14, 24),
-    STEEL
+  /* COURONNE */
+  const crown=new THREE.Mesh(
+    new THREE.CylinderGeometry(.12,.12,.22,32),
+    steel
   );
-  crown.rotation.z = Math.PI / 2;
-  crown.position.set(CASING * 1.05, 0, -0.02);
-  group.add(crown);
+  crown.rotation.z=Math.PI/2;
+  crown.position.set(1.27,0,-.03);
+  watch.add(crown);
 
-  // cran de la couronne
-  for (let i = 0; i < 14; i++){
-    const ang = (i / 14) * Math.PI * 2;
-    const tooth = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.02, 0.02), STEEL);
+  for(let i=0;i<12;i++){
+    const angle=i/12*Math.PI*2;
+    const tooth=new THREE.Mesh(
+      new THREE.BoxGeometry(.13,.025,.025),
+      brushed
+    );
     tooth.position.set(
-      CASING * 1.05,
-      Math.cos(ang) * 0.11,
-      Math.sin(ang) * 0.11
+      1.27,
+      Math.cos(angle)*.12,
+      Math.sin(angle)*.12
     );
-    tooth.rotation.x = ang;
-    group.add(tooth);
+    watch.add(tooth);
   }
 
-  // protecteurs de couronne
-  const guardGeo = new THREE.BoxGeometry(0.16, 0.1, 0.34);
-  const g1 = new THREE.Mesh(guardGeo, STEEL_BRUSH);
-  const g2 = new THREE.Mesh(guardGeo, STEEL_BRUSH);
-  g1.position.set(CASING * 0.98, 0.19, -0.02);
-  g2.position.set(CASING * 0.98, -0.19, -0.02);
-  g1.rotation.z = 0.35;
-  g2.rotation.z = -0.35;
-  group.add(g1, g2);
+  /* PROTECTIONS */
+  for(const y of [-.18,.18]){
+    const guard=new THREE.Mesh(
+      new THREE.BoxGeometry(.2,.1,.25),
+      brushed
+    );
+    guard.position.set(1.2,y,-.02);
+    watch.add(guard);
+  }
 
-  /* --- FOND DE BOÎTIER --- */
-  const caseBack = new THREE.Mesh(
-    new THREE.CylinderGeometry(CASING * 0.82, CASING * 0.9, 0.12, 96),
-    STEEL_BRUSH
+  /* FOND */
+  const back=new THREE.Mesh(
+    new THREE.CylinderGeometry(radius*.9,radius*.9,.1,64),
+    darkSteel
   );
-  caseBack.rotation.x = Math.PI / 2;
-  caseBack.position.z = -0.24;
-  group.add(caseBack);
+  back.rotation.x=Math.PI/2;
+  back.position.z=-.24;
+  watch.add(back);
 
-  /* --- BRACELET EN MAILLONS --- */
-  const bracelet = new THREE.Group();
-  const LINK_W = CASING * 1.01;
-  const LINK_H = 0.16;
-  const LINK_T = 0.1;
-  const N_LINKS = 11;
+  /* BRACELET MÉTALLIQUE */
+  const bracelet=new THREE.Group();
+  for(const direction of [-1,1]){
+    for(let i=0;i<12;i++){
+      const link=new THREE.Group();
+      const width=1.1-i*.025;
+      const y=direction*(1.2+i*.16);
 
-  const linkGeo = new THREE.BoxGeometry(LINK_W, LINK_H * 0.86, LINK_T);
-  const centerLinkGeo = new THREE.BoxGeometry(LINK_W * 0.34, LINK_H * 0.9, LINK_T * 1.02);
-
-  for (let side = 0; side < 2; side++){
-    const dir = side === 0 ? 1 : -1;
-    for (let i = 0; i < N_LINKS; i++){
-      const y = dir * (CASING + 0.09 + i * (LINK_H * 0.98));
-      const taper = 1 - i * 0.028;
-      const g = new THREE.Group();
-
-      const lateral = new THREE.Mesh(linkGeo, STEEL_BRUSH);
-      lateral.scale.x = taper;
-      g.add(lateral);
-
-      const mid = new THREE.Mesh(centerLinkGeo, STEEL);
-      mid.scale.x = taper;
-      g.add(mid);
-
-      g.position.set(0, y, -0.02);
-      // légère courbure qui suit le poignet
-      g.rotation.x = -dir * i * 0.035;
-      g.position.z = -0.02 + (i * i * 0.006);
-      bracelet.add(g);
+      const side=new THREE.Mesh(
+        new THREE.BoxGeometry(width,.145,.12),
+        brushed
+      );
+      const center=new THREE.Mesh(
+        new THREE.BoxGeometry(width*.32,.15,.125),
+        steel
+      );
+      link.add(side,center);
+      link.position.set(0,y,-.02+i*i*.004);
+      link.rotation.x=-direction*i*.025;
+      bracelet.add(link);
     }
   }
-  group.add(bracelet);
+  watch.add(bracelet);
 
-  /* --- VERRE SAPHIR BOMBÉ --- */
-  const glassGeo = new THREE.SphereGeometry(CASING * 1.0, 64, 32, 0, Math.PI * 2, 0, Math.PI / 2.6);
-  const glass = new THREE.Mesh(glassGeo, GLASS);
-  glass.rotation.x = Math.PI / 2;
-  glass.position.z = 0.33;
-  glass.scale.set(1, 1, 0.22);
-  group.add(glass);
-
-  /* --- REFLETS / LUEUR --- */
-  const halo = new THREE.Mesh(
-    new THREE.CircleGeometry(CASING * 1.35, 64),
-    new THREE.MeshBasicMaterial({ color:0xEEEEEE, transparent:true, opacity:0.035, side:THREE.DoubleSide })
+  /* VERRE */
+  const glass=new THREE.Mesh(
+    new THREE.SphereGeometry(1.04,64,32,0,Math.PI*2,0,Math.PI/2.6),
+    new THREE.MeshPhysicalMaterial({
+      color:0xffffff,
+      metalness:0,
+      roughness:.06,
+      transmission:.35,
+      transparent:true,
+      opacity:.15,
+      thickness:.2
+    })
   );
-  halo.position.z = -0.35;
-  group.add(halo);
+  glass.scale.set(1,1,.15);
+  glass.position.z=.37;
+  watch.add(glass);
 
-  return { group, hands: { hourHand, minHand, secHand } };
+  return {watch,hourHand,minuteHand,secondHand};
 }
 
-/* =========================================================
-   SCÈNE
-   ========================================================= */
-function createScene(host, opts = {}){
-  const autoRotateDefault = opts.autoRotate !== false;
+/* SCÈNE 3D */
+function createWatchScene(element,options={}){
+  if(!element)return null;
 
-  const scene = new THREE.Scene();
+  try{
+    const scene=new THREE.Scene();
+    const camera=new THREE.PerspectiveCamera(35,1,.1,100);
+    camera.position.set(0,0,6.4);
 
-  const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
-  camera.position.set(0, -0.2, 6.2);
+    const renderer=new THREE.WebGLRenderer({
+      alpha:true,
+      antialias:true,
+      powerPreference:'high-performance'
+    });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.7));
+    renderer.outputColorSpace=THREE.SRGBColorSpace;
+    renderer.toneMapping=THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure=1.25;
+    element.appendChild(renderer.domElement);
 
-  const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.15;
-  host.appendChild(renderer.domElement);
+    /* LUMIÈRES */
+    scene.add(new THREE.AmbientLight(0xffffff,.8));
 
-  /* lumières */
-  scene.add(new THREE.AmbientLight(0xffffff, 0.35));
+    const key=new THREE.DirectionalLight(0xffffff,3);
+    key.position.set(4,5,6);
+    scene.add(key);
 
-  const key = new THREE.DirectionalLight(0xffffff, 2.6);
-  key.position.set(4, 5, 6);
-  scene.add(key);
+    const rim=new THREE.DirectionalLight(0x9eb8cf,2.4);
+    rim.position.set(-5,1,-3);
+    scene.add(rim);
 
-  const rim = new THREE.DirectionalLight(0xBFD4FF, 2.0);
-  rim.position.set(-5, -2, 3);
-  scene.add(rim);
+    const fill=new THREE.PointLight(0xffffff,1.5);
+    fill.position.set(0,-4,4);
+    scene.add(fill);
 
-  const fill = new THREE.DirectionalLight(0xffffff, 0.9);
-  fill.position.set(-3, 4, -5);
-  scene.add(fill);
+    const watchData=buildWatch();
+    const watch=watchData.watch;
+    watch.rotation.x=-.25;
+    watch.rotation.y=-.15;
+    scene.add(watch);
 
-  const bottom = new THREE.PointLight(0x8FA8C8, 1.6, 14);
-  bottom.position.set(0, -3.5, 2);
-  scene.add(bottom);
+    let controls=null;
+    if(options.interactive){
+      controls=new OrbitControls(camera,renderer.domElement);
+      controls.enableDamping=true;
+      controls.dampingFactor=.06;
+      controls.enablePan=false;
+      controls.minDistance=4.2;
+      controls.maxDistance=8;
+      controls.minPolarAngle=.4;
+      controls.maxPolarAngle=2.7;
+      controls.autoRotate=true;
+      controls.autoRotateSpeed=.7;
+      controls.target.set(0,0,0);
+    }
 
-  /* environnement métallique généré (pas de fichier externe) */
-  const pmrem = new THREE.PMREMGenerator(renderer);
-  const envScene = new THREE.Scene();
-  const room = new THREE.Mesh(
-    new THREE.BoxGeometry(12, 12, 12),
-    new THREE.MeshStandardMaterial({ color:0x2a2a2c, side:THREE.BackSide, metalness:1, roughness:0.9 })
-  );
-  envScene.add(room);
-  const lightPanel1 = new THREE.Mesh(
-    new THREE.PlaneGeometry(5, 5),
-    new THREE.MeshBasicMaterial({ color:0xffffff })
-  );
-  lightPanel1.position.set(0, 5.9, 0);
-  lightPanel1.rotation.x = Math.PI / 2;
-  envScene.add(lightPanel1);
-  const lightPanel2 = new THREE.Mesh(
-    new THREE.PlaneGeometry(4, 6),
-    new THREE.MeshBasicMaterial({ color:0xdde7ff })
-  );
-  lightPanel2.position.set(-5.9, 0, 0);
-  lightPanel2.rotation.y = Math.PI / 2;
-  envScene.add(lightPanel2);
-  const envRT = pmrem.fromScene(envScene, 0.04);
-  scene.environment = envRT.texture;
+    function resize(){
+      const width=element.clientWidth;
+      const height=element.clientHeight;
+      if(!width||!height)return;
+      renderer.setSize(width,height,false);
+      camera.aspect=width/height;
+      camera.updateProjectionMatrix();
+    }
 
-  /* la montre */
-  const { group, hands } = buildWatch();
-  group.rotation.x = -0.32;
-  scene.add(group);
+    const resizeObserver=new ResizeObserver(resize);
+    resizeObserver.observe(element);
+    resize();
 
-  /* contrôle rotation */
-  const controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true;
-  controls.dampingFactor = 0.075;
-  controls.enablePan = false;
-  controls.minDistance = 4.2;
-  controls.maxDistance = 9.5;
-  controls.minPolarAngle = Math.PI * 0.14;
-  controls.maxPolarAngle = Math.PI * 0.86;
-  controls.autoRotate = autoRotateDefault;
-  controls.autoRotateSpeed = 0.9;
-  controls.rotateSpeed = 0.85;
-  controls.zoomSpeed = 0.7;
+    const clock=new THREE.Clock();
+    let animationId=0;
+    let active=true;
+    let rotationEnabled=true;
 
-  /* redimensionnement */
-  function resize(){
-    const w = host.clientWidth;
-    const h = host.clientHeight;
-    if (!w || !h) return;
-    renderer.setSize(w, h, false);
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
+    function animate(){
+      animationId=requestAnimationFrame(animate);
+      if(!active)return;
+
+      const t=clock.getElapsedTime();
+      watchData.secondHand.rotation.z=-t*.45;
+      watchData.minuteHand.rotation.z=.6-t*.007;
+      watchData.hourHand.rotation.z=-.8-t*.0006;
+
+      if(!controls||!rotationEnabled){
+        watch.rotation.y=Math.sin(t*.3)*.1;
+      }
+
+      if(controls){
+        controls.autoRotate=rotationEnabled;
+        controls.update();
+      }
+
+      renderer.render(scene,camera);
+    }
+    animate();
+
+    return {
+      reset(){
+        if(controls){
+          controls.reset();
+          camera.position.set(0,0,6.4);
+        }
+        watch.rotation.set(-.25,-.15,0);
+      },
+      toggle(){
+        rotationEnabled=!rotationEnabled;
+        return rotationEnabled;
+      },
+      destroy(){
+        active=false;
+        cancelAnimationFrame(animationId);
+        resizeObserver.disconnect();
+        controls?.dispose();
+        renderer.dispose();
+      }
+    };
+
+  }catch(error){
+    console.error('DESTINY 3D error:',error);
+    element.innerHTML='<div style="height:100%;display:grid;place-items:center;color:#999;font-size:11px;letter-spacing:3px">DESTINY — SIGNATURE 001</div>';
+    return null;
   }
-  resize();
-  const ro = new ResizeObserver(resize);
-  ro.observe(host);
-
-  /* état interaction : on coupe l'auto-rotation pendant le drag */
-  let userInteracting = false;
-  renderer.domElement.addEventListener('pointerdown', () => {
-    userInteracting = true;
-    host.classList.add('grabbing');
-  });
-  window.addEventListener('pointerup', () => {
-    userInteracting = false;
-    host.classList.remove('grabbing');
-  });
-
-  /* boucle */
-  const clock = new THREE.Clock();
-  let running = true;
-  let raf;
-
-  function animate(){
-    raf = requestAnimationFrame(animate);
-    if (!running) return;
-
-    const t = clock.getElapsedTime();
-
-    // les aiguilles avancent
-    hands.secHand.rotation.z = Math.PI * 1.15 - t * 0.35;
-    hands.minHand.rotation.z = Math.PI / 5 - t * 0.035;
-    hands.hourHand.rotation.z = -Math.PI / 3 - t * 0.003;
-
-    // respiration douce du groupe
-    group.position.y = Math.sin(t * 0.6) * 0.035;
-
-    controls.autoRotate = autoRotateDefault && !userInteracting;
-    controls.update();
-    renderer.render(scene, camera);
-  }
-  animate();
-
-  /* API de contrôle */
-  return {
-    reset(){
-      controls.reset();
-      camera.position.set(0, -0.2, 6.2);
-      controls.target.set(0, 0, 0);
-      group.rotation.set(-0.32, 0, 0);
-      controls.update();
-    },
-    toggleSpin(){
-      const next = !controls.autoRotate;
-      controls.autoRotate = next;
-      return next;
-    },
-    setPaused(p){ running = p; if (p) animate(); else cancelAnimationFrame(raf); },
-    dispose(){
-      cancelAnimationFrame(raf);
-      ro.disconnect();
-      renderer.dispose();
-      envRT.dispose();
-      pmrem.dispose();
-    },
-    controls
-  };
 }
 
-/* =========================================================
-   INITIALISATION
-   ========================================================= */
-const host = document.getElementById('canvas-host');
-const viewer = createScene(host, { autoRotate: true });
+/* INITIALISATION */
+const heroScene=createWatchScene(
+  document.getElementById('hero-watch'),
+  {interactive:false}
+);
 
-/* boutons */
-const btnSpin = document.getElementById('btn-spin');
-btnSpin.addEventListener('click', () => {
-  const on = viewer.toggleSpin();
-  btnSpin.textContent = on ? '❚❚' : '▶';
+const mainScene=createWatchScene(
+  document.getElementById('watch-canvas'),
+  {interactive:true}
+);
+
+/* BOUTONS 3D */
+document.getElementById('reset-watch').addEventListener('click',()=>{
+  mainScene?.reset();
 });
 
-document.getElementById('btn-reset').addEventListener('click', () => viewer.reset());
-
-/* hero : version miniature, non interactive, en arrière-plan */
-const heroHost = document.getElementById('hero-3d');
-heroHost.style.pointerEvents = 'none';
-createScene(heroHost, { autoRotate: true });
-
-/* pause hors écran pour économiser la batterie */
-let heroPaused = false;
-const ioWatch = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (!heroPaused && !e.isIntersecting) { /* hero garde sa boucle, léger */ }
-  });
-}, { threshold: 0 });
-ioWatch.observe(heroHost);
-
-/* =========================================================
-   RESTE DU SITE (loader, reveal, négations)
-   ========================================================= */
-window.addEventListener('load', () => {
-  setTimeout(() => document.getElementById('loader').classList.add('done'), 1900);
+const spinButton=document.getElementById('spin-watch');
+spinButton.addEventListener('click',()=>{
+  const enabled=mainScene?.toggle();
+  spinButton.textContent=enabled?'Ⅱ':'▶';
 });
 
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-  });
-}, { threshold: 0.18, rootMargin: '0px 0px -60px 0px' });
-
-document.querySelectorAll('.reveal').forEach((el, i) => {
-  el.style.transitionDelay = (i % 6) * 60 + 'ms';
-  io.observe(el);
-});
-
-const ioNeg = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ioNeg.unobserve(e.target); } });
-}, { threshold: 0.35 });
-document.querySelectorAll('.reveal-neg').forEach(el => ioNeg.observe(el));
+/* SI THREE.JS NE CHARGE PAS, LE SITE RESTE UTILISABLE */
 </script>
+
 </body>
 </html>
-
-
-
