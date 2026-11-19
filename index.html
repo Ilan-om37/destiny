@@ -16,6 +16,7 @@
   --white:#f3f4f5;
   --line:rgba(255,255,255,.12);
 }
+
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--white);font-family:Inter,sans-serif;overflow-x:hidden}
@@ -83,7 +84,7 @@ nav{
 .btn-border{border:1px solid #444}
 .btn-border:hover{border-color:white}
 
-/* UNIQUE 3D WATCH */
+/* 3D WATCH */
 .hero-3d{
  position:absolute;right:0;top:50%;transform:translateY(-50%);
  width:66%;height:100%;z-index:2;touch-action:pan-y
@@ -161,7 +162,7 @@ section{padding:120px 8%}
 }
 .watch-photo img{width:100%;height:100%;object-fit:contain;display:block}
 
-/* COLLECTION - THREE REAL PHOTOS */
+/* COLLECTION */
 .collection{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .product{border:1px solid var(--line);padding:15px;transition:.4s}
 .product:hover{transform:translateY(-6px);border-color:#687e92}
@@ -264,6 +265,7 @@ footer{
 
 <body>
 
+<!-- LOADER -->
 <div id="loader">
  <div class="loader-inner">
   <div class="loader-logo">DESTINY.</div>
@@ -272,6 +274,7 @@ footer{
  </div>
 </div>
 
+<!-- NAVIGATION -->
 <nav>
  <a class="logo" href="#">DESTINY<span>.</span></a>
  <button class="menu-toggle" id="menuToggle">☰</button>
@@ -284,7 +287,7 @@ footer{
  <a class="nav-button" href="#access">Accès exclusif ↗</a>
 </nav>
 
-<!-- ACCUEIL : UNIQUE MONTRE 3D -->
+<!-- HERO -->
 <header class="hero">
  <div class="hero-copy">
   <div class="eyebrow">BEYOND TIME. BEYOND LIMITS.</div>
@@ -308,6 +311,7 @@ footer{
  </div>
 </header>
 
+<!-- MARQUEE -->
 <div class="marquee">
  <div class="marquee-track">
   <span>TIME IS YOURS <b>◆</b></span>
@@ -404,6 +408,7 @@ footer{
     et un cadran digital profond. Chaque détail incarne
     l'équilibre entre élégance, précision et innovation.
    </p>
+
    <div class="instruction">↳ UNE NOUVELLE VISION DU TEMPS</div>
 
    <div class="specs">
@@ -415,7 +420,6 @@ footer{
    </div>
   </div>
 
-  <!-- PHOTO REELLE DE LA MONTRE -->
   <div class="watch-photo reveal">
    <img src="assets/montre-principale.png"
         alt="Montre DESTINY Signature 001">
@@ -423,7 +427,7 @@ footer{
  </div>
 </section>
 
-<!-- COLLECTION : 3 PHOTOS REELLES -->
+<!-- COLLECTION : THREE VISIONS -->
 <section id="collection">
  <div class="section-header">
   <div>
@@ -439,7 +443,7 @@ footer{
 
   <article class="product reveal">
    <div class="product-image">
-    <img src="assets/montre-1.png" alt="DESTINY Signature 001">
+    <img src="montre-1.png.png" alt="DESTINY Signature 001">
    </div>
    <div class="product-info">
     <h3>Signature 001</h3>
@@ -453,7 +457,7 @@ footer{
 
   <article class="product reveal">
    <div class="product-image">
-    <img src="assets/montre-2.png" alt="DESTINY Signature Gold">
+    <img src="montre-2.png.png" alt="DESTINY Signature Gold">
    </div>
    <div class="product-info">
     <h3>Signature Gold</h3>
@@ -467,7 +471,7 @@ footer{
 
   <article class="product reveal">
    <div class="product-image">
-    <img src="assets/montre-3.png" alt="DESTINY Signature Black">
+    <img src="montre-3.png.png" alt="DESTINY Signature Black">
    </div>
    <div class="product-info">
     <h3>Signature Black</h3>
@@ -514,6 +518,7 @@ footer{
  <div id="form-message"></div>
 </section>
 
+<!-- FOOTER -->
 <footer>
  <div>
   <div class="footer-links">
@@ -531,6 +536,7 @@ footer{
  <div class="footer-logo">DESTINY.</div>
 </footer>
 
+<!-- JAVASCRIPT -->
 <script>
 /* MENU MOBILE */
 const toggle=document.getElementById('menuToggle');
@@ -569,11 +575,12 @@ document.getElementById('emailForm').addEventListener('submit',e=>{
 function finishLoading(){
  document.getElementById('loader').classList.add('hide');
 }
+
 window.addEventListener('load',()=>setTimeout(finishLoading,500));
 setTimeout(finishLoading,3000);
 </script>
 
-<!-- THREE.JS : UNE SEULE VRAIE MONTRE 3D -->
+<!-- THREE.JS : MONTRE 3D INTERACTIVE -->
 <script type="module">
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js';
@@ -621,7 +628,7 @@ try{
  light3.position.set(0,-3,4);
  scene.add(light3);
 
- /* MODELE 3D REEL */
+ /* MODELE 3D */
  const loader=new GLTFLoader();
  const pivot=new THREE.Group();
  scene.add(pivot);
@@ -658,7 +665,7 @@ try{
    pivot.add(model);
    modelLoaded=true;
 
-   /* OMBRES ET MATERIAUX */
+   /* MATERIAUX */
    model.traverse(obj=>{
     if(obj.isMesh){
      obj.castShadow=true;
@@ -681,7 +688,7 @@ try{
   }
  );
 
- /* ROTATION A LA SOURIS ET AU TACTILE */
+ /* ROTATION SOURIS ET TACTILE */
  const canvas=renderer.domElement;
 
  canvas.style.cursor='grab';
@@ -773,5 +780,6 @@ try{
 
 </body>
 </html>
+
 
 
