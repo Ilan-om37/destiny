@@ -24,9 +24,7 @@
   padding:0;
 }
 
-html {
-  scroll-behavior:smooth;
-}
+html { scroll-behavior:smooth; }
 
 body {
   background:var(--bg);
@@ -35,19 +33,9 @@ body {
   overflow-x:hidden;
 }
 
-a {
-  color:inherit;
-  text-decoration:none;
-}
-
-button {
-  font-family:inherit;
-}
-
-::selection {
-  background:#8abfff;
-  color:#08090b;
-}
+a { color:inherit; text-decoration:none; }
+button { font-family:inherit; }
+::selection { background:#8abfff; color:#08090b; }
 
 /* LOADER */
 
@@ -67,9 +55,7 @@ button {
   pointer-events:none;
 }
 
-.loader-inner {
-  text-align:center;
-}
+.loader-inner { text-align:center; }
 
 .loader-logo {
   font-size:48px;
@@ -100,9 +86,7 @@ button {
   animation:load 2s forwards;
 }
 
-@keyframes load {
-  to { width:100%; }
-}
+@keyframes load { to { width:100%; } }
 
 /* NAVIGATION */
 
@@ -128,9 +112,7 @@ nav {
   letter-spacing:-2px;
 }
 
-.logo span {
-  color:#80bfff;
-}
+.logo span { color:#80bfff; }
 
 .nav-links {
   display:flex;
@@ -146,9 +128,7 @@ nav {
   transition:.3s;
 }
 
-.nav-links a:hover {
-  color:white;
-}
+.nav-links a:hover { color:white; }
 
 .nav-button {
   border:1px solid #555;
@@ -191,11 +171,7 @@ nav {
   height:800px;
   right:-60px;
   top:2%;
-  background:radial-gradient(
-    circle,
-    rgba(55,115,180,.2),
-    transparent 70%
-  );
+  background:radial-gradient(circle,rgba(55,115,180,.2),transparent 70%);
 }
 
 .hero-copy {
@@ -272,13 +248,8 @@ nav {
   transform:translateY(-3px);
 }
 
-.btn-border {
-  border:1px solid #444;
-}
-
-.btn-border:hover {
-  border-color:white;
-}
+.btn-border { border:1px solid #444; }
+.btn-border:hover { border-color:white; }
 
 /* HERO WATCH IMAGE */
 
@@ -305,12 +276,8 @@ nav {
 }
 
 @keyframes watchFloat {
-  0%,100% {
-    transform:translateY(0);
-  }
-  50% {
-    transform:translateY(-15px);
-  }
+  0%,100% { transform:translateY(0); }
+  50% { transform:translateY(-15px); }
 }
 
 .hero-bottom {
@@ -348,9 +315,7 @@ nav {
   color:#888;
 }
 
-.marquee b {
-  color:#80bfff;
-}
+.marquee b { color:#80bfff; }
 
 @keyframes marquee {
   to { transform:translateX(-50%); }
@@ -358,9 +323,7 @@ nav {
 
 /* GENERAL SECTIONS */
 
-section {
-  padding:120px 8%;
-}
+section { padding:120px 8%; }
 
 .section-label {
   font-size:9px;
@@ -406,9 +369,7 @@ section {
 
 /* CONCEPT */
 
-.concept-list {
-  margin-top:55px;
-}
+.concept-list { margin-top:55px; }
 
 .concept-item {
   display:grid;
@@ -451,13 +412,8 @@ section {
   transition:.3s;
 }
 
-.feature:last-child {
-  border:0;
-}
-
-.feature:hover {
-  background:#12171d;
-}
+.feature:last-child { border:0; }
+.feature:hover { background:#12171d; }
 
 .feature-number {
   font-size:9px;
@@ -480,77 +436,6 @@ section {
   font-size:10px;
   color:#888;
   line-height:1.9;
-}
-
-/* WATCH PRESENTATION */
-
-.watch-section {
-  background:linear-gradient(120deg,#101317,#090a0c);
-  border-block:1px solid var(--line);
-}
-
-.watch-grid {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  align-items:center;
-  gap:70px;
-}
-
-.watch-copy h3 {
-  font-size:38px;
-  letter-spacing:-2px;
-  margin-bottom:20px;
-}
-
-.watch-copy>p {
-  font-size:12px;
-  color:#8d9298;
-  line-height:2;
-}
-
-.instruction {
-  font-size:9px;
-  color:#82bdff;
-  letter-spacing:2px;
-  margin-top:25px;
-}
-
-.specs {
-  margin-top:35px;
-  border-top:1px solid var(--line);
-}
-
-.spec {
-  display:flex;
-  justify-content:space-between;
-  padding:15px 0;
-  border-bottom:1px solid var(--line);
-  font-size:10px;
-}
-
-.spec span:first-child {
-  color:#737981;
-  letter-spacing:1px;
-  text-transform:uppercase;
-  font-size:8px;
-}
-
-.spec span:last-child {
-  text-align:right;
-}
-
-.watch-photo {
-  height:440px;
-  border:1px solid var(--line);
-  overflow:hidden;
-  background:radial-gradient(circle,#202932,#0b0d10);
-}
-
-.watch-photo img {
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  display:block;
 }
 
 /* COLLECTION */
@@ -591,9 +476,7 @@ section {
   transform:scale(1.06);
 }
 
-.product-info {
-  padding:22px 5px 10px;
-}
+.product-info { padding:22px 5px 10px; }
 
 .product-info h3 {
   font-size:17px;
@@ -623,9 +506,7 @@ section {
   color:#888;
 }
 
-.product-bottom strong {
-  font-size:14px;
-}
+.product-bottom strong { font-size:14px; }
 
 /* MANIFESTO */
 
@@ -656,9 +537,7 @@ section {
 
 /* ACCESS */
 
-.final {
-  text-align:center;
-}
+.final { text-align:center; }
 
 .final h2 {
   font-size:clamp(45px,7vw,90px);
@@ -750,14 +629,7 @@ footer {
 /* RESPONSIVE */
 
 @media(max-width:950px) {
-
-  .features {
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .watch-grid {
-    grid-template-columns:1fr;
-  }
+  .features { grid-template-columns:repeat(2,1fr); }
 
   .hero-product-image {
     width:65%;
@@ -772,9 +644,7 @@ footer {
     padding:0 6%;
   }
 
-  .menu-toggle {
-    display:block;
-  }
+  .menu-toggle { display:block; }
 
   .nav-links {
     display:none;
@@ -787,13 +657,8 @@ footer {
     flex-direction:column;
   }
 
-  .nav-links.open {
-    display:flex;
-  }
-
-  .nav-button {
-    display:none;
-  }
+  .nav-links.open { display:flex; }
+  .nav-button { display:none; }
 
   .hero {
     height:auto;
@@ -802,9 +667,7 @@ footer {
     padding:140px 7% 60px;
   }
 
-  .hero-copy {
-    width:100%;
-  }
+  .hero-copy { width:100%; }
 
   .hero h1 {
     font-size:clamp(58px,15vw,90px);
@@ -826,17 +689,11 @@ footer {
     bottom:18px;
   }
 
-  section {
-    padding:85px 7%;
-  }
+  section { padding:85px 7%; }
 
-  .section-header {
-    display:block;
-  }
+  .section-header { display:block; }
 
-  .section-description {
-    margin-top:25px;
-  }
+  .section-description { margin-top:25px; }
 
   .concept-item {
     grid-template-columns:1fr 20px 1fr;
@@ -848,9 +705,7 @@ footer {
     font-size:14px;
   }
 
-  .features {
-    grid-template-columns:1fr;
-  }
+  .features { grid-template-columns:1fr; }
 
   .feature {
     border-right:0;
@@ -858,25 +713,13 @@ footer {
     min-height:210px;
   }
 
-  .feature-icon {
-    margin:25px 0;
-  }
+  .feature-icon { margin:25px 0; }
 
-  .watch-photo {
-    height:330px;
-  }
+  .collection { grid-template-columns:1fr; }
 
-  .collection {
-    grid-template-columns:1fr;
-  }
+  .product-image { height:290px; }
 
-  .product-image {
-    height:290px;
-  }
-
-  .manifesto {
-    padding-block:100px;
-  }
+  .manifesto { padding-block:100px; }
 
   .email-form {
     flex-direction:column;
@@ -890,18 +733,14 @@ footer {
     padding:17px;
   }
 
-  .email-form button {
-    padding:17px;
-  }
+  .email-form button { padding:17px; }
 
   footer {
     display:block;
     padding:35px 7%;
   }
 
-  .footer-logo {
-    margin-top:35px;
-  }
+  .footer-logo { margin-top:35px; }
 }
 </style>
 </head>
@@ -928,7 +767,6 @@ footer {
   <div class="nav-links" id="navLinks">
     <a href="#concept">Le concept</a>
     <a href="#technology">Technologie</a>
-    <a href="#watch">La montre</a>
     <a href="#collection">Collection</a>
   </div>
 
@@ -959,8 +797,8 @@ footer {
     </p>
 
     <div class="hero-actions">
-      <a href="#watch" class="btn btn-white">
-        Découvrir la montre ↗
+      <a href="#collection" class="btn btn-white">
+        Découvrir la collection ↗
       </a>
 
       <a href="#concept" class="btn btn-border">
@@ -970,7 +808,7 @@ footer {
 
   </div>
 
-  <!-- IMAGE PRINCIPALE : MONTRE 2 -->
+  <!-- MONTRE PRINCIPALE -->
 
   <div class="hero-product-image">
     <img
@@ -1109,88 +947,6 @@ footer {
   </div>
 </section>
 
-<!-- PRESENTATION DE LA MONTRE -->
-
-<section class="watch-section" id="watch">
-
-  <div class="section-header">
-
-    <div>
-      <div class="section-label">03 — L'OBJET</div>
-
-      <h2 class="section-title reveal">
-        Designed to<br>be timeless.
-      </h2>
-    </div>
-
-    <p class="section-description reveal">
-      L'horlogerie traditionnelle rencontre une vision tournée vers demain.
-    </p>
-
-  </div>
-
-  <div class="watch-grid">
-
-    <div class="watch-copy reveal">
-
-      <h3>
-        DESTINY<br>
-        SIGNATURE 001
-      </h3>
-
-      <p>
-        Une silhouette affirmée, un boîtier en acier travaillé
-        et un cadran digital profond. Chaque détail incarne
-        l'équilibre entre élégance, précision et innovation.
-      </p>
-
-      <div class="instruction">
-        ↳ UNE NOUVELLE VISION DU TEMPS
-      </div>
-
-      <div class="specs">
-
-        <div class="spec">
-          <span>Boîtier</span>
-          <span>Acier inoxydable</span>
-        </div>
-
-        <div class="spec">
-          <span>Écran</span>
-          <span>Digital tactile</span>
-        </div>
-
-        <div class="spec">
-          <span>Verre</span>
-          <span>Effet saphir</span>
-        </div>
-
-        <div class="spec">
-          <span>Bracelet</span>
-          <span>Acier articulé</span>
-        </div>
-
-        <div class="spec">
-          <span>Interface</span>
-          <span>DESTINY OS</span>
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="watch-photo reveal">
-
-      <img
-        src="assets/montre-principale.png"
-        alt="Montre DESTINY Signature 001"
-      >
-
-    </div>
-
-  </div>
-</section>
-
 <!-- COLLECTION : THREE VISIONS -->
 
 <section id="collection">
@@ -1198,7 +954,7 @@ footer {
   <div class="section-header">
 
     <div>
-      <div class="section-label">04 — COLLECTION</div>
+      <div class="section-label">03 — COLLECTION</div>
 
       <h2 class="section-title reveal">
         Three visions.<br>
@@ -1327,7 +1083,7 @@ footer {
 <section class="final" id="access">
 
   <div class="section-label reveal">
-    05 — ACCÈS PRIVILÉGIÉ
+    04 — ACCÈS PRIVILÉGIÉ
   </div>
 
   <h2 class="reveal">
@@ -1368,7 +1124,6 @@ footer {
     <div class="footer-links">
       <a href="#concept">Concept</a>
       <a href="#technology">Technologie</a>
-      <a href="#watch">La montre</a>
       <a href="#collection">Collection</a>
       <a href="#access">Contact</a>
     </div>
@@ -1422,7 +1177,6 @@ const io = new IntersectionObserver(entries => {
     if(e.isIntersecting) {
 
       e.target.classList.add('visible');
-
       io.unobserve(e.target);
 
     }
@@ -1451,15 +1205,11 @@ document.getElementById('emailForm').addEventListener('submit', e => {
 /* CHARGEMENT */
 
 function finishLoading() {
-
   document.getElementById('loader').classList.add('hide');
-
 }
 
 window.addEventListener('load', () => {
-
   setTimeout(finishLoading, 500);
-
 });
 
 setTimeout(finishLoading, 3000);
@@ -1468,6 +1218,7 @@ setTimeout(finishLoading, 3000);
 
 </body>
 </html>
+
 
 
 
